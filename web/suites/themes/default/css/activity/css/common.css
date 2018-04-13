@@ -1,0 +1,47 @@
+body,div,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,input,legend,li,ol,p,td,textarea,th,ul,tr,img{
+	margin:0px;
+	padding: 0px;
+}
+ul,li{
+	list-style: none;
+	list-style-image: none ;
+}
+body{
+	font-family: 'Helvetica', Arial, sans-serif;
+/* 	font-size: 12px; */
+	color: #2b2b2b;
+	background-color: #FFF;
+	height: 100%;
+	overflow-x: hidden;
+}
+a{
+	/* font-size: 12px; */
+    color: #2b2b2b;
+    text-decoration: none;
+}
+a:hover{
+	text-decoration:none;
+}
+div{
+	line-height: 150%;
+}
+i,em{font-style: normal;}
+
+/*清除浮动*/
+.clearfix{
+	zoom:1;
+	overflow: hidden;
+}
+.clear{
+	clear:both;
+	height: 10px;
+	overflow: hidden;
+}
+.clearfix:after{
+	display: block;
+	clear: both;
+	height: 0;
+	overflow: hidden;
+	content::"";
+	font-size: 0;
+}
