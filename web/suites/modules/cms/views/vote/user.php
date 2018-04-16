@@ -96,7 +96,7 @@
     $(document).ready(function(){
        $(".changeBtn").click(function(){
            $.ajax({
-              url:"<? echo site_url('_cms/vote/changeAccess') ?>",
+              url:"<?php echo site_url('_cms/vote/changeAccess') ?>",
               data:{"openId":$(this).attr('data-openId'),'access':$(this).attr('data-access')},
               dataType:"json",
                type:"post",

@@ -24,10 +24,10 @@
                 <tbody>
                 <?php foreach ($voteList as $index => $item):?>
                     <tr>
-                        <td><? echo $index+1 ?></td>
-                        <td><? echo $item['date'] ?></td>
-                        <td><? echo $item['endTime'] ?></td>
-                        <td><? echo $item['total'] ?></td>
+                        <td><?php echo $index+1 ?></td>
+                        <td><?php echo $item['date'] ?></td>
+                        <td><?php echo $item['endTime'] ?></td>
+                        <td><?php echo $item['total'] ?></td>
                         <td>
                             <a href="<?php echo my_site_url('vote/details').'/'.$item['id'] ?>">详情</a>&nbsp;&nbsp;&nbsp;
                             <a href="<?php echo my_site_url('vote/exportVoteDetails').'/'.$item['id'].'/'.$item['date'] ?>" >导出Excel</a>

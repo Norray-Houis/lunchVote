@@ -561,7 +561,6 @@ class Vote extends NLF_Controller
         $this->excel_library->export('玖晔午餐报表');
 //        p($monthlyData);
 
-
     }
 
 

@@ -37,7 +37,7 @@ class Timer extends NLF_Controller
                 $postData = array(
                     "touser"=>$log['openId'],
                     "template_id"=>$templateId,
-                    "page"=>"vote/vote",
+//                    "page"=>"vote/vote",
                     "form_id"=>$log['form_id'],
                     "data"=>array(
                         "keyword1"=>array(
