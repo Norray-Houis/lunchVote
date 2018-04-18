@@ -47,6 +47,8 @@
                     <?php endforeach;?>
                 </tbody>
             </table>
+
+            <?php echo $pager ?>
         </div>
     </div>
 </div>

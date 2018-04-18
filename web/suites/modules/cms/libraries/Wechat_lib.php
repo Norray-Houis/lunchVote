@@ -23,9 +23,10 @@ class Wechat_lib
      * @return mixed
      */
     public function getAccessToken(){
-
+//        exit('x1');
         $this->ci->load->model('wechat_access_token_mdl');
         $record = $this->ci->wechat_access_token_mdl->getRecord($this->appId);
+
         if(!$record['access_token'] || time() >= $record['valid_date']){
             $ch = curl_init(); //初始化一个CURL对象
             curl_setopt($ch, CURLOPT_URL, "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appId."&secret=".$this->secret);//设置你所需要抓取的URL

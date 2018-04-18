@@ -83,7 +83,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var additionOptionVal = "配汤\r配柠檬茶\r无";
+        var additionOptionVal = "配汤\r配柠檬茶（饮料）\r无";
         $("#additionOption").val(additionOptionVal);
         $("#date").datetimepicker({
             language:  'zh-CN',

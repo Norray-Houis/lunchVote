@@ -38,14 +38,22 @@ class Vote extends NLF_Controller
     /**
      * 投票列表
      */
-    public function listing(){
+    public function listing($page=1){
 
         //读取投票数据
         $this->load->model('vote_mdl');
-        $voteList = $this->vote_mdl->getListByDesc();
+        $limit = 20;
+        $pageInfo = array(
+            "limit"=>$limit,    //获取多少个
+            "offset"=>($page-1)*$limit,    //偏移量
+        );
+        $voteList = $this->vote_mdl->getListing();
+        $totalRow = $this->vote_mdl->total_row([],$pageInfo);
+        $url = my_site_url('vote/listing');
+        $pager = $this->load->view('public/pager',compact('pageInfo','totalRow','page','url'),TRUE);
 
         $channel = '点餐列表';
-        $array = compact('channel','voteList');
+        $array = compact('channel','voteList','pager');
 //        p($array);exit;
         load_view('vote/listing',$array);
     }
@@ -68,13 +76,28 @@ class Vote extends NLF_Controller
 
 
     /**
-     * @param bool $nickName
+     * @param bool
      */
-    public function user($nickName = FALSE){
+    public function user($page = 1){
+
         $this->load->model('wechat_user_mdl');
-        $userList = $this->wechat_user_mdl->getUserList($nickName);
+
+        $limit = 20;
+        $pageInfo = array(
+            "limit"=>$limit,    //获取多少个
+            "offset"=>($page-1)*$limit,    //偏移量
+        );
+
+        $userList = $this->wechat_user_mdl->getListing([],$pageInfo);
+        $totalRow = $this->wechat_user_mdl->total_row([]);
+
+        $url = my_site_url('vote/user');
+        $pager = $this->load->view('public/pager',compact('pageInfo','totalRow','page','url'),TRUE);
+
         $channel = "用户管理";
-        $array = compact('userList','channel');
+
+        $array = compact('userList','channel','pager');
+
         load_view('vote/user',$array);
     }
 

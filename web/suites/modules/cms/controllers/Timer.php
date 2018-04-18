@@ -17,11 +17,10 @@ class Timer extends NLF_Controller
         $templateId = 'lfohcAMABZpB6__bK219Mv3_DMKpERoVqkGSCbr1RPs';
         $this->load->library('log_library');
         $this->load->library('wechat_lib');
+        $this->load->model('vote_log_mdl');
         ignore_user_abort();//
         set_time_limit(0);//
-        $second = strtotime(date('Y-m-d 10:00:00',strtotime('+1 day')))-time();
-//        var_dump($second);
-//        exit($second);
+
         do{
             $this->db->select("vl.create_time,wu.nickname,wu.head_img,vo.*,vl.description,vl.id as logId,wu.openId,wu.department,wu.position,vl.scene,vl.form_id");
             $this->db->from('wechat_user AS wu');
@@ -29,15 +28,13 @@ class Timer extends NLF_Controller
             $this->db->join("vote_option as vo", "vo.id = vl.option_id", 'left');
             $this->db->join('vote as v','v.id = vl.vote_id','left');
             $this->db->where("v.date = '".date('Y-m-d')."'");
+            $this->db->where('vl.is_send = 0');
             $query = $this->db->get();
             $userLog = $query->result_array();
-//            p($userLog);exit;
-//            p($this->db->last_query());
             foreach ($userLog as $log){
                 $postData = array(
                     "touser"=>$log['openId'],
                     "template_id"=>$templateId,
-//                    "page"=>"vote/vote",
                     "form_id"=>$log['form_id'],
                     "data"=>array(
                         "keyword1"=>array(
@@ -52,16 +49,21 @@ class Timer extends NLF_Controller
                     ),
                 );
                 $access = $this->wechat_lib->getAccessToken();
+
                 $result = $this->wechat_lib->sendTemplateMsg($access,$postData);
-//                p($result);
+
                 if(is_array($result)){
                     $result = json_response($result);
                 }
-                log_message('debug',$result);
-                $this->log_library->writeLog(date('Y-m-d').".txt",$result);
+
+                $this->log_library->writeLog(date('Y-m-d').".txt",$result."\r");
+                $this->vote_log_mdl->updateLog($log['logId'],array('is_send'=>1));
             }
 
             unset($query,$result,$access,$postData,$userLog);
+            $second = strtotime(date('Y-m-d 10:00:00',strtotime('+1 day')))-time();
+
+//            echo $second;exit();
             sleep($second);
         }while(true);
     }
@@ -230,5 +232,21 @@ class Timer extends NLF_Controller
     public function getLog($fileId){
         $this->load->library('log_library');
         p($this->log_library->readLog($fileId));
+    }
+
+    public function test(){
+        ignore_user_abort();
+        set_time_limit(0);
+        $this->load->library('log_library');
+        do{
+            $this->log_library->writeLog('test.txt',date('Y-m-d H:i:s')."\r");
+            sleep(10);
+        }while(true);
+    }
+
+    public function getPath(){
+        $this->load->library('log_library');
+        p($this->log_library->getPath());
+        p($_SERVER);
     }
 }

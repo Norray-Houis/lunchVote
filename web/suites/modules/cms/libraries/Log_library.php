@@ -12,7 +12,7 @@ class Log_library
 
     function __construct()
     {
-        $this->logPath = dirname(dirname(__FILE__))."/log/";
+        $this->logPath = substr(__FILE__,0,strpos(__FILE__,'lunchVote'))."/log/";
         if(!file_exists($this->logPath)){
             mkdir($this->logPath);
         }
@@ -37,4 +37,10 @@ class Log_library
         return file_get_contents($this->logPath.$fileId);
     }
 
+    public function getPath(){
+
+        $path = substr(__FILE__,0,strpos(__FILE__,'lunchVote'));
+        return $path;
+//        return $this->logPath;
+    }
 }

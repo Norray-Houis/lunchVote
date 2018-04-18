@@ -143,4 +143,54 @@ class Vote_mdl extends CI_Model
         return $query->row_array();
     }
 
+
+    public function getListing($params = [],$pages = []){
+
+        $this->db->from($this->table);
+        $this->db->order_by('date','desc');
+
+        $this->query_cond($params);
+        if (isset($pages['limit'], $pages['offset'])) {
+            $this->db->limit($pages['limit'], $pages['offset']);
+        }
+        $query = $this->db->get();
+//        exit($this->db->last_query());
+        return $query->result_array();
+    }
+
+    /**
+     * @param array $params
+     * 查询条件
+     */
+    private function query_cond($params = []){
+        foreach ($params as $k => $v){
+            switch ($k){
+                case 'where':
+
+                    break;
+                case 'like':
+
+                    break;
+            }
+        }
+    }
+
+    /**
+     * @param $params
+     * @return int
+     * 获取总数
+     */
+    public function total_row($params){
+        $this->query_cond($params);
+        $this->db->select('count(id) as c');
+        $this->db->from($this->table);
+        $query = $this->db->get();
+
+        $result = 0;
+        if ($rows = $query->row_array()) {
+            $result = $rows['c'];
+        }
+
+        return $result;
+    }
 }
